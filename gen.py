@@ -24,6 +24,9 @@ def solve():
     day{day} = Day{day}(content)
     print(day{day}.part1())
     print(day{day}.part2())
+
+test()
+solve()
 ''')
 
 if __name__ == '__main__':
