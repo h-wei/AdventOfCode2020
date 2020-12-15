@@ -6,7 +6,7 @@ class Day15:
         for i in range(n-1):
             d[starting[i]] = i+1
         last = starting[-1]
-        for i in range(len(starting), turn):
+        for i in range(n, turn):
             j = d[last]
             d[last] = i
             last = i - j if j > 0 else 0
