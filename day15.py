@@ -1,20 +1,15 @@
 class Day15:
     @staticmethod
     def part1(starting, turn):
+        d = [0] * turn
+        n = len(starting)
+        for i in range(n-1):
+            d[starting[i]] = i+1
         last = starting[-1]
-        d = {n: [i+1] for i, n in enumerate(starting)}
         for i in range(len(starting), turn):
-            if last not in d:
-                d[last] = [i+1]
-                continue
-            if len(d[last]) == 1:
-                last = 0
-            else:
-                last = d[last][0] - d[last][1]
-            if last not in d:
-                d[last] = [i+1]
-            else:
-                d[last] = [i+1, d[last][0]]
+            j = d[last]
+            d[last] = i
+            last = i - j if j > 0 else 0
         return last
 
 def test():
