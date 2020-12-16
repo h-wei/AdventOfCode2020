@@ -7,8 +7,7 @@ class Day15:
             d[starting[i]] = i+1
         last = starting[-1]
         for i in range(n, turn):
-            j = d[last]
-            d[last] = i
+            j, d[last] = d[last], i
             last = i - j if j > 0 else 0
         return last
 
