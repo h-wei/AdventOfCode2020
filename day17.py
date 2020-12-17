@@ -49,7 +49,7 @@ def test():
 ###"""
     day17 = Day17(content)
     assert day17.part1() == 112
-    # assert day17.part2() ==
+    assert day17.part2() == 848
 
 
 def solve():
