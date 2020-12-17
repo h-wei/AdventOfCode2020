@@ -4,30 +4,32 @@ class Day16:
         self.your = []
         self.near = []
         count = 0
-        for line in content.split('\n'):
+        for line in content.split("\n"):
             if len(line) == 0:
                 count += 1
             elif count == 0:
-                key, value = line.split(': ')
-                items = value.split(' or ')
+                key, value = line.split(": ")
+                items = value.split(" or ")
                 rule = []
                 for item in items:
-                    rule += item.split('-')
+                    rule += item.split("-")
                 self.rules.append((key, [int(r) for r in rule]))
             elif count == 1:
-                items = line.split(',')
+                items = line.split(",")
                 if len(items) > 1:
                     self.your = [int(i) for i in items]
             elif count == 2:
-                items = line.split(',')
+                items = line.split(",")
                 if len(items) > 1:
                     self.near.append([int(i) for i in items])
-                
+
     def part1(self):
         total = 0
         for ticket in self.near:
             for i, v in enumerate(ticket):
-                if not any(x0 <= v <= x1 or y0 <= v <= y1 for _, (x0, x1, y0, y1) in self.rules):
+                if not any(
+                    x0 <= v <= x1 or y0 <= v <= y1 for _, (x0, x1, y0, y1) in self.rules
+                ):
                     total += v
         return total
 
@@ -45,12 +47,14 @@ class Day16:
             if key.startswith(name):
                 product *= int(self.your[mapper[i]])
         return product
-    
+
     def _check(self):
         invalid = set()
         for i, ticket in enumerate(self.near):
             for v in ticket:
-                if not any(x0 <= v <= x1 or y0 <= v <= y1 for _, (x0, x1, y0, y1) in self.rules):
+                if not any(
+                    x0 <= v <= x1 or y0 <= v <= y1 for _, (x0, x1, y0, y1) in self.rules
+                ):
                     invalid.add(i)
                     break
         return invalid
@@ -58,7 +62,13 @@ class Day16:
     def _row(self, ticket):
         row = []
         for i, v in enumerate(ticket):
-            row.append(set(j for j, (_, (x0, x1, y0, y1)) in enumerate(self.rules) if x0 <= v <= x1 or y0 <= v <= y1))
+            row.append(
+                set(
+                    j
+                    for j, (_, (x0, x1, y0, y1)) in enumerate(self.rules)
+                    if x0 <= v <= x1 or y0 <= v <= y1
+                )
+            )
         return row
 
     @staticmethod
@@ -72,8 +82,9 @@ class Day16:
                     neighbors[i].remove(val)
                     if len(neighbors[i]) == 1:
                         stack.append(i)
-        
-        return {n:i for i, (n,) in enumerate(neighbors)}        
+
+        return {n: i for i, (n,) in enumerate(neighbors)}
+
 
 def test():
     content = """class: 1-3 or 5-7
@@ -92,11 +103,13 @@ nearby tickets:
     assert day16.part1() == 71
     # assert day16.part2() ==
 
+
 def solve():
-    content = open('input/16.txt').read()
+    content = open("input/16.txt").read()
     day16 = Day16(content)
     print(day16.part1())
-    print(day16.part2('departure'))
+    print(day16.part2("departure"))
+
 
 test()
 solve()

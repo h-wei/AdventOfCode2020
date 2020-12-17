@@ -1,22 +1,21 @@
 class Day4:
     def __init__(self, content):
         self.passports = list(self._parse(content))
-        
+
     def _parse(self, content):
         item = []
-        for line in content.split('\n'):
-            if line == '':
-                yield dict(items.split(':') for items in ' '.join(item).split())
+        for line in content.split("\n"):
+            if line == "":
+                yield dict(items.split(":") for items in " ".join(item).split())
                 item = []
             else:
                 item.append(line)
         else:
-            yield dict(items.split(':') for items in ' '.join(item).split())
-            
-    def part1(self):
-        keywords = set(['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'])
-        return sum(keywords <= set(passport.keys()) for passport in self.passports)
+            yield dict(items.split(":") for items in " ".join(item).split())
 
+    def part1(self):
+        keywords = set(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"])
+        return sum(keywords <= set(passport.keys()) for passport in self.passports)
 
     def part2(self):
         def valid(passport):
@@ -32,25 +31,42 @@ class Day4:
             pid (Passport ID) - a nine-digit number, including leading zeroes.
             cid (Country ID) - ignored, missing or not.
             """
-            if not ('byr' in passport and 1920 <= int(passport['byr']) <= 2002):
+            if not ("byr" in passport and 1920 <= int(passport["byr"]) <= 2002):
                 return False
-            if not ('iyr' in passport and 2010 <= int(passport['iyr']) <= 2020):
+            if not ("iyr" in passport and 2010 <= int(passport["iyr"]) <= 2020):
                 return False
-            if not ('eyr' in passport and 2020 <= int(passport['eyr']) <= 2030):
+            if not ("eyr" in passport and 2020 <= int(passport["eyr"]) <= 2030):
                 return False
-            if 'hgt' not in passport:
+            if "hgt" not in passport:
                 return False
-            height, unit = int(passport['hgt'][:-2]), passport['hgt'][-2:]
-            if not ((unit == 'cm' and 150 <= height <= 193) or (unit == 'in' and 59 <= height <= 76)):
+            height, unit = int(passport["hgt"][:-2]), passport["hgt"][-2:]
+            if not (
+                (unit == "cm" and 150 <= height <= 193)
+                or (unit == "in" and 59 <= height <= 76)
+            ):
                 return False
-            if not ('hcl' in passport and passport['hcl'][0] == '#' and len(passport['hcl']) == 7 and all(i in '0123456789abcdef' for i in passport['hcl'][1:])):
+            if not (
+                "hcl" in passport
+                and passport["hcl"][0] == "#"
+                and len(passport["hcl"]) == 7
+                and all(i in "0123456789abcdef" for i in passport["hcl"][1:])
+            ):
                 return False
-            if not ('ecl' in passport and passport['ecl'] in ('amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth')):
+            if not (
+                "ecl" in passport
+                and passport["ecl"] in ("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
+            ):
                 return False
-            if not ('pid' in passport and len(passport['pid']) == 9 and all('0'<=i<='9' for i in passport['pid'])):
+            if not (
+                "pid" in passport
+                and len(passport["pid"]) == 9
+                and all("0" <= i <= "9" for i in passport["pid"])
+            ):
                 return False
             return True
+
         return sum(valid(passport) for passport in self.passports)
+
 
 def test():
     content = """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
@@ -69,11 +85,13 @@ iyr:2011 ecl:brn hgt:59in"""
     day4 = Day4(content)
     assert day4.part1() == 2
 
+
 def solve():
-    content = open('input/4.txt').read()
+    content = open("input/4.txt").read()
     day4 = Day4(content)
     print(day4.part1())
     print(day4.part2())
+
 
 test()
 solve()

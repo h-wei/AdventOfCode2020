@@ -2,9 +2,11 @@
 
 import sys
 
+
 def generate(day):
-    with open(f'day{day}.py', 'w') as f:
-        f.write(f'''class Day{day}:
+    with open(f"day{day}.py", "w") as f:
+        f.write(
+            f'''class Day{day}:
     def __init__(self, content):
 
     def part1(self):
@@ -27,9 +29,11 @@ def solve():
 
 test()
 solve()
-''')
+'''
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("python3 day.py day")
         sys.exit(1)
